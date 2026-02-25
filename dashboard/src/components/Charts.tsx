@@ -37,36 +37,39 @@ function ChartTooltipContent({ active, payload, label }: { active?: boolean; pay
   );
 }
 
+function truncate(s: string, max: number) {
+  return s.length > max ? s.slice(0, max) + "…" : s;
+}
+
 function CategoriesChart({ db }: { db: Database }) {
   const data = useMemo(() => {
     return Object.entries(db.summary.categoriesBreakdown)
       .slice(0, 12)
       .map(([name, val]) => ({
-        name,
+        name: truncate(name, 14),
+        fullName: name,
         totalMRR: val.totalMRR,
         count: val.count,
       }));
   }, [db]);
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={320}>
       <BarChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
         <XAxis
           dataKey="name"
-          tick={{ fontSize: 9, fill: "#888" }}
+          tick={{ fontSize: 11, fill: "#999" }}
           tickLine={false}
           axisLine={{ stroke: "#1a1a1a" }}
-          angle={-40}
-          textAnchor="end"
-          height={90}
+          height={35}
           interval={0}
         />
         <YAxis
-          tick={{ fontSize: 9, fill: "#666" }}
+          tick={{ fontSize: 10, fill: "#777" }}
           tickLine={false}
           axisLine={false}
           tickFormatter={(v) => formatCurrency(v, true)}
-          width={55}
+          width={60}
         />
         <Tooltip content={<ChartTooltipContent />} cursor={{ fill: "#151515" }} />
         <Bar dataKey="totalMRR" name="mrr" radius={[2, 2, 0, 0]}>
@@ -92,21 +95,22 @@ function CountriesChart({ db }: { db: Database }) {
   }, [db]);
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={320}>
       <BarChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
         <XAxis
           dataKey="name"
-          tick={{ fontSize: 9, fill: "#888" }}
+          tick={{ fontSize: 11, fill: "#999" }}
           tickLine={false}
           axisLine={{ stroke: "#1a1a1a" }}
           interval={0}
+          height={35}
         />
         <YAxis
-          tick={{ fontSize: 9, fill: "#666" }}
+          tick={{ fontSize: 10, fill: "#777" }}
           tickLine={false}
           axisLine={false}
           tickFormatter={(v) => formatCurrency(v, true)}
-          width={55}
+          width={60}
         />
         <Tooltip content={<ChartTooltipContent />} cursor={{ fill: "#151515" }} />
         <Bar dataKey="totalMRR" name="mrr" radius={[2, 2, 0, 0]}>
@@ -143,23 +147,21 @@ function DistributionChart({ startups }: { startups: Startup[] }) {
   }, [startups]);
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={320}>
       <BarChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
         <XAxis
           dataKey="name"
-          tick={{ fontSize: 9, fill: "#888" }}
+          tick={{ fontSize: 11, fill: "#999" }}
           tickLine={false}
           axisLine={{ stroke: "#1a1a1a" }}
-          angle={-25}
-          textAnchor="end"
-          height={50}
+          height={35}
           interval={0}
         />
         <YAxis
-          tick={{ fontSize: 9, fill: "#666" }}
+          tick={{ fontSize: 10, fill: "#777" }}
           tickLine={false}
           axisLine={false}
-          width={40}
+          width={45}
         />
         <Tooltip content={<ChartTooltipContent />} cursor={{ fill: "#151515" }} />
         <Bar dataKey="count" name="startups" radius={[2, 2, 0, 0]} fill="#555" />
@@ -182,12 +184,12 @@ function ScatterPlot({ startups }: { startups: Startup[] }) {
   }, [startups]);
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <ScatterChart margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
+    <ResponsiveContainer width="100%" height={340}>
+      <ScatterChart margin={{ top: 5, right: 10, bottom: 10, left: 5 }}>
         <XAxis
           dataKey="mrr"
           name="MRR"
-          tick={{ fontSize: 9, fill: "#888" }}
+          tick={{ fontSize: 11, fill: "#999" }}
           tickLine={false}
           axisLine={{ stroke: "#1a1a1a" }}
           tickFormatter={(v) => formatCurrency(v, true)}
@@ -197,13 +199,13 @@ function ScatterPlot({ startups }: { startups: Startup[] }) {
         <YAxis
           dataKey="revenue"
           name="Revenue"
-          tick={{ fontSize: 9, fill: "#666" }}
+          tick={{ fontSize: 10, fill: "#777" }}
           tickLine={false}
           axisLine={false}
           tickFormatter={(v) => formatCurrency(v, true)}
           scale="log"
           domain={["auto", "auto"]}
-          width={60}
+          width={65}
         />
         <ZAxis dataKey="subs" range={[20, 400]} />
         <Tooltip
@@ -259,35 +261,35 @@ function DealScatter({ startups }: { startups: Startup[] }) {
         <div className="text-[0.6rem] text-text-dim">
           {data.length} for-sale startups · median multiple: {medianMultiple.toFixed(1)}x
         </div>
-        <div className="flex items-center gap-3 text-[0.55rem]">
+        <div className="flex items-center gap-3 text-[0.65rem]">
           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green inline-block" /> below median</span>
           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red inline-block" /> above median</span>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={300}>
-        <ScatterChart margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
+      <ResponsiveContainer width="100%" height={340}>
+        <ScatterChart margin={{ top: 5, right: 10, bottom: 10, left: 5 }}>
           <XAxis
             dataKey="mrr"
             name="MRR"
-            tick={{ fontSize: 9, fill: "#888" }}
+            tick={{ fontSize: 11, fill: "#999" }}
             tickLine={false}
             axisLine={{ stroke: "#1a1a1a" }}
             tickFormatter={(v) => formatCurrency(v, true)}
             scale="log"
             domain={["auto", "auto"]}
-            label={{ value: "MRR (monthly)", position: "insideBottom", offset: -2, fontSize: 9, fill: "#555" }}
+            label={{ value: "MRR (monthly)", position: "insideBottom", offset: -2, fontSize: 10, fill: "#666" }}
           />
           <YAxis
             dataKey="price"
             name="Asking Price"
-            tick={{ fontSize: 9, fill: "#666" }}
+            tick={{ fontSize: 10, fill: "#777" }}
             tickLine={false}
             axisLine={false}
             tickFormatter={(v) => formatCurrency(v, true)}
             scale="log"
             domain={["auto", "auto"]}
-            width={65}
-            label={{ value: "Asking Price", angle: -90, position: "insideLeft", offset: 10, fontSize: 9, fill: "#555" }}
+            width={70}
+            label={{ value: "Asking Price", angle: -90, position: "insideLeft", offset: 10, fontSize: 10, fill: "#666" }}
           />
           <ZAxis dataKey="subs" range={[30, 300]} />
           <Tooltip
@@ -333,7 +335,7 @@ export function Charts({ db }: { db: Database }) {
     { key: "countries", label: "by country" },
     { key: "distribution", label: "mrr distribution" },
     { key: "scatter", label: "mrr vs revenue" },
-    { key: "deals", label: "mrr vs price (for sale)" },
+    { key: "deals", label: "deal map" },
   ];
 
   return (
@@ -342,16 +344,16 @@ export function Charts({ db }: { db: Database }) {
       style={{ background: "#0e0e0e", animationDelay: "350ms", animationFillMode: "backwards" }}
     >
       {/* tabs */}
-      <div className="flex items-center border-b border-border overflow-x-auto">
-        {tabs.map((tab, i) => (
+      <div className="flex items-center gap-4 border-b border-border overflow-x-auto px-2">
+        {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setView(tab.key)}
-            className={`px-4 py-2.5 text-[0.7rem] transition-colors whitespace-nowrap cursor-pointer border-b-2 ${
+            className={`px-3 py-3 text-[0.75rem] transition-colors whitespace-nowrap cursor-pointer border-b-2 ${
               view === tab.key
                 ? "text-text-primary border-text-muted"
                 : "text-text-muted hover:text-text-secondary border-transparent"
-            } ${i > 0 ? "ml-1" : ""}`}
+            }`}
           >
             {tab.label}
           </button>
