@@ -9,22 +9,22 @@ import {
   Tooltip,
   ResponsiveContainer,
   Cell,
-  Treemap,
   ScatterChart,
   Scatter,
   ZAxis,
+  ReferenceLine,
 } from "recharts";
 import type { Database, Startup } from "@/lib/types";
 import { formatCurrency, formatNumber } from "@/lib/format";
 
 const CHART_COLORS = ["#333", "#3a3a3a", "#444", "#4a4a4a", "#555", "#5a5a5a", "#666", "#6a6a6a", "#777", "#888"];
 
-type ChartView = "categories" | "countries" | "distribution" | "scatter";
+type ChartView = "categories" | "countries" | "distribution" | "scatter" | "deals";
 
 function ChartTooltipContent({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; name: string }>; label?: string }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="border border-border rounded-sm px-2 py-1.5 text-[0.65rem]" style={{ background: "#111" }}>
+    <div className="border border-border rounded-sm px-2.5 py-2 text-[0.65rem]" style={{ background: "#111" }}>
       <div className="text-text-secondary mb-0.5">{label}</div>
       {payload.map((p, i) => (
         <div key={i} className="text-text-primary">
@@ -42,30 +42,31 @@ function CategoriesChart({ db }: { db: Database }) {
     return Object.entries(db.summary.categoriesBreakdown)
       .slice(0, 12)
       .map(([name, val]) => ({
-        name: name.length > 14 ? name.slice(0, 12) + "…" : name,
+        name,
         totalMRR: val.totalMRR,
         count: val.count,
       }));
   }, [db]);
 
   return (
-    <ResponsiveContainer width="100%" height={260}>
-      <BarChart data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
         <XAxis
           dataKey="name"
-          tick={{ fontSize: 9, fill: "#555" }}
+          tick={{ fontSize: 9, fill: "#888" }}
           tickLine={false}
           axisLine={{ stroke: "#1a1a1a" }}
-          angle={-30}
+          angle={-40}
           textAnchor="end"
-          height={60}
+          height={90}
+          interval={0}
         />
         <YAxis
-          tick={{ fontSize: 9, fill: "#444" }}
+          tick={{ fontSize: 9, fill: "#666" }}
           tickLine={false}
           axisLine={false}
           tickFormatter={(v) => formatCurrency(v, true)}
-          width={50}
+          width={55}
         />
         <Tooltip content={<ChartTooltipContent />} cursor={{ fill: "#151515" }} />
         <Bar dataKey="totalMRR" name="mrr" radius={[2, 2, 0, 0]}>
@@ -91,20 +92,21 @@ function CountriesChart({ db }: { db: Database }) {
   }, [db]);
 
   return (
-    <ResponsiveContainer width="100%" height={260}>
-      <BarChart data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
         <XAxis
           dataKey="name"
-          tick={{ fontSize: 9, fill: "#555" }}
+          tick={{ fontSize: 9, fill: "#888" }}
           tickLine={false}
           axisLine={{ stroke: "#1a1a1a" }}
+          interval={0}
         />
         <YAxis
-          tick={{ fontSize: 9, fill: "#444" }}
+          tick={{ fontSize: 9, fill: "#666" }}
           tickLine={false}
           axisLine={false}
           tickFormatter={(v) => formatCurrency(v, true)}
-          width={50}
+          width={55}
         />
         <Tooltip content={<ChartTooltipContent />} cursor={{ fill: "#151515" }} />
         <Bar dataKey="totalMRR" name="mrr" radius={[2, 2, 0, 0]}>
@@ -141,22 +143,23 @@ function DistributionChart({ startups }: { startups: Startup[] }) {
   }, [startups]);
 
   return (
-    <ResponsiveContainer width="100%" height={260}>
-      <BarChart data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
         <XAxis
           dataKey="name"
-          tick={{ fontSize: 8, fill: "#555" }}
+          tick={{ fontSize: 9, fill: "#888" }}
           tickLine={false}
           axisLine={{ stroke: "#1a1a1a" }}
-          angle={-20}
+          angle={-25}
           textAnchor="end"
-          height={45}
+          height={50}
+          interval={0}
         />
         <YAxis
-          tick={{ fontSize: 9, fill: "#444" }}
+          tick={{ fontSize: 9, fill: "#666" }}
           tickLine={false}
           axisLine={false}
-          width={35}
+          width={40}
         />
         <Tooltip content={<ChartTooltipContent />} cursor={{ fill: "#151515" }} />
         <Bar dataKey="count" name="startups" radius={[2, 2, 0, 0]} fill="#555" />
@@ -179,12 +182,12 @@ function ScatterPlot({ startups }: { startups: Startup[] }) {
   }, [startups]);
 
   return (
-    <ResponsiveContainer width="100%" height={260}>
-      <ScatterChart margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+    <ResponsiveContainer width="100%" height={300}>
+      <ScatterChart margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
         <XAxis
           dataKey="mrr"
           name="MRR"
-          tick={{ fontSize: 9, fill: "#444" }}
+          tick={{ fontSize: 9, fill: "#888" }}
           tickLine={false}
           axisLine={{ stroke: "#1a1a1a" }}
           tickFormatter={(v) => formatCurrency(v, true)}
@@ -194,13 +197,13 @@ function ScatterPlot({ startups }: { startups: Startup[] }) {
         <YAxis
           dataKey="revenue"
           name="Revenue"
-          tick={{ fontSize: 9, fill: "#444" }}
+          tick={{ fontSize: 9, fill: "#666" }}
           tickLine={false}
           axisLine={false}
           tickFormatter={(v) => formatCurrency(v, true)}
           scale="log"
           domain={["auto", "auto"]}
-          width={55}
+          width={60}
         />
         <ZAxis dataKey="subs" range={[20, 400]} />
         <Tooltip
@@ -208,7 +211,7 @@ function ScatterPlot({ startups }: { startups: Startup[] }) {
             if (!active || !payload?.length) return null;
             const d = payload[0].payload;
             return (
-              <div className="border border-border rounded-sm px-2 py-1.5 text-[0.65rem]" style={{ background: "#111" }}>
+              <div className="border border-border rounded-sm px-2.5 py-2 text-[0.65rem]" style={{ background: "#111" }}>
                 <div className="text-text-secondary mb-0.5">{d.name}</div>
                 <div className="text-text-primary">MRR: {formatCurrency(d.mrr, true)}</div>
                 <div className="text-text-primary">Rev: {formatCurrency(d.revenue, true)}</div>
@@ -222,6 +225,106 @@ function ScatterPlot({ startups }: { startups: Startup[] }) {
   );
 }
 
+// ─── NEW: MRR vs Asking Price for for-sale startups ───
+function DealScatter({ startups }: { startups: Startup[] }) {
+  const data = useMemo(() => {
+    return startups
+      .filter((s) => s.onSale && s.mrr && s.mrr > 0 && s.askingPrice && s.askingPrice > 0)
+      .map((s) => {
+        const arr = s.mrr! * 12;
+        const multiple = s.askingPrice! / arr;
+        return {
+          name: s.name || s.slug,
+          mrr: s.mrr!,
+          price: s.askingPrice!,
+          multiple,
+          growth: s.growth30d || 0,
+          subs: s.activeSubscriptions || 1,
+          category: s.userCategory || s.systemCategory || "Unknown",
+        };
+      });
+  }, [startups]);
+
+  // median multiple for reference line
+  const medianMultiple = useMemo(() => {
+    const multiples = data.map(d => d.multiple).sort((a, b) => a - b);
+    if (multiples.length === 0) return 3;
+    const mid = Math.floor(multiples.length / 2);
+    return multiples.length % 2 !== 0 ? multiples[mid] : (multiples[mid - 1] + multiples[mid]) / 2;
+  }, [data]);
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-2 px-1">
+        <div className="text-[0.6rem] text-text-dim">
+          {data.length} for-sale startups · median multiple: {medianMultiple.toFixed(1)}x
+        </div>
+        <div className="flex items-center gap-3 text-[0.55rem]">
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green inline-block" /> below median</span>
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red inline-block" /> above median</span>
+        </div>
+      </div>
+      <ResponsiveContainer width="100%" height={300}>
+        <ScatterChart margin={{ top: 5, right: 10, bottom: 5, left: 5 }}>
+          <XAxis
+            dataKey="mrr"
+            name="MRR"
+            tick={{ fontSize: 9, fill: "#888" }}
+            tickLine={false}
+            axisLine={{ stroke: "#1a1a1a" }}
+            tickFormatter={(v) => formatCurrency(v, true)}
+            scale="log"
+            domain={["auto", "auto"]}
+            label={{ value: "MRR (monthly)", position: "insideBottom", offset: -2, fontSize: 9, fill: "#555" }}
+          />
+          <YAxis
+            dataKey="price"
+            name="Asking Price"
+            tick={{ fontSize: 9, fill: "#666" }}
+            tickLine={false}
+            axisLine={false}
+            tickFormatter={(v) => formatCurrency(v, true)}
+            scale="log"
+            domain={["auto", "auto"]}
+            width={65}
+            label={{ value: "Asking Price", angle: -90, position: "insideLeft", offset: 10, fontSize: 9, fill: "#555" }}
+          />
+          <ZAxis dataKey="subs" range={[30, 300]} />
+          <Tooltip
+            content={({ active, payload }) => {
+              if (!active || !payload?.length) return null;
+              const d = payload[0].payload;
+              return (
+                <div className="border border-border rounded-sm px-2.5 py-2 text-[0.65rem]" style={{ background: "#111" }}>
+                  <div className="text-text-primary font-normal mb-1">{d.name}</div>
+                  <div className="text-text-secondary">MRR: {formatCurrency(d.mrr, true)}/mo</div>
+                  <div className="text-text-secondary">Price: {formatCurrency(d.price, true)}</div>
+                  <div className={d.multiple < medianMultiple ? "text-green" : "text-red"}>
+                    {d.multiple.toFixed(1)}x revenue multiple
+                  </div>
+                  {d.growth !== 0 && (
+                    <div className="text-text-dim">Growth: {d.growth > 0 ? "+" : ""}{d.growth.toFixed(1)}%</div>
+                  )}
+                  <div className="text-text-dim">{d.category}</div>
+                </div>
+              );
+            }}
+          />
+          <Scatter data={data}>
+            {data.map((d, i) => (
+              <Cell
+                key={i}
+                fill={d.multiple < medianMultiple ? "#4ade80" : "#f87171"}
+                opacity={d.multiple < medianMultiple ? 0.7 : 0.4}
+              />
+            ))}
+          </Scatter>
+        </ScatterChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 export function Charts({ db }: { db: Database }) {
   const [view, setView] = useState<ChartView>("categories");
 
@@ -230,6 +333,7 @@ export function Charts({ db }: { db: Database }) {
     { key: "countries", label: "by country" },
     { key: "distribution", label: "mrr distribution" },
     { key: "scatter", label: "mrr vs revenue" },
+    { key: "deals", label: "mrr vs price (for sale)" },
   ];
 
   return (
@@ -238,16 +342,16 @@ export function Charts({ db }: { db: Database }) {
       style={{ background: "#0e0e0e", animationDelay: "350ms", animationFillMode: "backwards" }}
     >
       {/* tabs */}
-      <div className="flex items-center gap-0 border-b border-border overflow-x-auto">
-        {tabs.map((tab) => (
+      <div className="flex items-center border-b border-border overflow-x-auto">
+        {tabs.map((tab, i) => (
           <button
             key={tab.key}
             onClick={() => setView(tab.key)}
-            className={`px-3 py-2 text-[0.65rem] transition-colors whitespace-nowrap cursor-pointer ${
+            className={`px-4 py-2.5 text-[0.7rem] transition-colors whitespace-nowrap cursor-pointer border-b-2 ${
               view === tab.key
-                ? "text-text-secondary border-b border-text-muted"
-                : "text-text-dim hover:text-text-muted"
-            }`}
+                ? "text-text-primary border-text-muted"
+                : "text-text-muted hover:text-text-secondary border-transparent"
+            } ${i > 0 ? "ml-1" : ""}`}
           >
             {tab.label}
           </button>
@@ -260,6 +364,7 @@ export function Charts({ db }: { db: Database }) {
         {view === "countries" && <CountriesChart db={db} />}
         {view === "distribution" && <DistributionChart startups={db.startups} />}
         {view === "scatter" && <ScatterPlot startups={db.startups} />}
+        {view === "deals" && <DealScatter startups={db.startups} />}
       </div>
     </div>
   );

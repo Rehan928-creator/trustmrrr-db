@@ -11,6 +11,15 @@ import {
 } from "@/lib/format";
 import { StartupDetail } from "./StartupDetail";
 
+function getWhaleRisk(s: { mrr?: number; activeSubscriptions?: number }): { level: string; color: string } | null {
+  if (!s.mrr || s.mrr <= 0 || !s.activeSubscriptions || s.activeSubscriptions <= 0) return null;
+  const arps = s.mrr / s.activeSubscriptions;
+  if (arps > s.mrr * 0.3) return { level: "!!", color: "text-red" };
+  if (arps > s.mrr * 0.1) return { level: "!", color: "text-amber" };
+  if (s.activeSubscriptions < 5 && s.mrr > 1000) return { level: "!", color: "text-amber" };
+  return null;
+}
+
 interface StartupTableProps {
   startups: Startup[];
   page: number;
@@ -123,6 +132,9 @@ export function StartupTable({
                   onClick={toggleSort}
                 />
                 <th className="px-3 py-2.5 text-[0.6rem] text-text-muted uppercase tracking-wider text-right">
+                  risk
+                </th>
+                <th className="px-3 py-2.5 text-[0.6rem] text-text-muted uppercase tracking-wider text-right">
                   category
                 </th>
                 <th className="px-3 py-2.5 text-[0.6rem] text-text-muted uppercase tracking-wider text-right">
@@ -143,7 +155,7 @@ export function StartupTable({
                     <td className="px-3 py-2 text-text-dim text-[0.65rem]">
                       {rank}
                     </td>
-                    <td className="px-3 py-2 text-left max-w-[200px]">
+                    <td className="px-3 py-2 text-left max-w-[300px]">
                       <div className="flex items-center gap-2">
                         {s.country && (
                           <span className="text-[0.7rem] shrink-0">
@@ -181,6 +193,17 @@ export function StartupTable({
                       {s.activeSubscriptions
                         ? formatNumber(s.activeSubscriptions, true)
                         : <span className="text-text-dim">—</span>}
+                    </td>
+                    <td className="px-3 py-2 text-right text-[0.65rem]">
+                      {(() => {
+                        const whale = getWhaleRisk(s);
+                        if (!whale) return <span className="text-text-dim">—</span>;
+                        return (
+                          <span className={whale.color} title={`Whale risk: ${s.activeSubscriptions} subs, $${Math.round((s.mrr || 0) / (s.activeSubscriptions || 1))}/sub`}>
+                            {whale.level}
+                          </span>
+                        );
+                      })()}
                     </td>
                     <td className="px-3 py-2 text-right">
                       {cat && (

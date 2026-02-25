@@ -6,7 +6,9 @@ import { StatsGrid } from "@/components/StatsGrid";
 import { FilterBar } from "@/components/FilterBar";
 import { StartupTable } from "@/components/StartupTable";
 import { Charts } from "@/components/Charts";
+import { Insights } from "@/components/Insights";
 import { QuickInsights } from "@/components/QuickInsights";
+import { ExportButton } from "@/components/ExportButton";
 
 function Face() {
   const [eyes, setEyes] = useState("╹ ╹");
@@ -86,7 +88,7 @@ function Dashboard({
     <div className="min-h-screen">
       {/* header */}
       <header className="border-b border-border">
-        <div className="max-w-[1400px] mx-auto px-4 py-5">
+        <div className="px-6 py-5">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-base font-normal text-text-primary flex items-center gap-2">
@@ -98,27 +100,33 @@ function Dashboard({
                 searchable.
               </p>
             </div>
-            <a
-              href="https://github.com/xammen/trustmrrr-db"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[0.65rem] text-text-dim hover:text-text-secondary border border-border rounded-sm px-2.5 py-1.5 transition-colors"
-            >
-              json
-            </a>
+            <div className="flex items-center gap-2">
+              <ExportButton startups={filtered} totalCount={db.startups.length} />
+              <a
+                href="https://github.com/xammen/trustmrrr-db"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[0.65rem] text-text-dim hover:text-text-secondary border border-border rounded-sm px-2.5 py-1.5 transition-colors"
+              >
+                github
+              </a>
+            </div>
           </div>
         </div>
       </header>
 
       {/* main content */}
-      <main className="max-w-[1400px] mx-auto px-4 py-6 space-y-6">
+      <main className="px-6 py-6 space-y-6">
         {/* stats */}
         <StatsGrid db={db} />
 
         {/* charts */}
         <Charts db={db} />
 
-        {/* filters + table + insights */}
+        {/* insights: deal radar, fastest growing, dying, cofounders */}
+        <Insights db={db} />
+
+        {/* filters + table + sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-6">
           <div className="space-y-4 min-w-0">
             <FilterBar
@@ -151,7 +159,7 @@ function Dashboard({
 
       {/* footer */}
       <footer className="border-t border-border mt-8">
-        <div className="max-w-[1400px] mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="px-6 py-4 flex items-center justify-between">
           <div className="text-[0.6rem] text-text-dim">
             made by{" "}
             <a
